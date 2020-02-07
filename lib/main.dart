@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:minicurso/bloc/counter_bloc.dart';
 import 'package:minicurso/mobx/counter_mobx.dart';
-import 'package:minicurso/mobx_codegen/counter_mobx_codegen.dart';
 import 'package:minicurso/pages/todo_bloc_page.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
@@ -132,10 +131,21 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _counterMobx.increment,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
+      floatingActionButton: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: <Widget>[
+          FloatingActionButton(
+            onPressed: _counterMobx.decrement,
+            tooltip: 'Decrement',
+            child: Icon(Icons.remove),
+          ),
+          SizedBox(width: 10),
+          FloatingActionButton(
+            onPressed: _counterMobx.increment,
+            tooltip: 'Increment',
+            child: Icon(Icons.add),
+          ),
+        ],
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }

@@ -3,11 +3,13 @@ import 'package:mobx/mobx.dart';
 class CounterMobx {
   CounterMobx() {
     increment = Action(_increment);
+    decrement = Action(_decrement);
   }
 
   Observable _counter = Observable(0);
 
   Action increment;
+  Action decrement;
 
   int get value => _counter.value;
 
@@ -17,5 +19,9 @@ class CounterMobx {
 
   _increment() {
     _counter.value++;
+  }
+
+  _decrement() {
+    _counter.value--;
   }
 }
