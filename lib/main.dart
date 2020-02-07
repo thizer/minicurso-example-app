@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:minicurso/bloc/counter_bloc.dart';
 import 'package:minicurso/mobx/counter_mobx.dart';
+import 'package:minicurso/mobx_codegen/counter_mobx_codegen.dart';
 import 'package:minicurso/pages/todo_bloc_page.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
@@ -54,6 +55,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   CounterBloc _counterBloc = CounterBloc();
   CounterMobx _counterMobx = CounterMobx();
+  CounterMobxCodegen _counterMobxCodegen = CounterMobxCodegen();
 
   @override
   Widget build(BuildContext context) {
@@ -116,7 +118,7 @@ class _MyHomePageState extends State<MyHomePage> {
             Observer(
               builder: (BuildContext context) {
                 return Text(
-                  _counterMobx.value.toString(),
+                  _counterMobxCodegen.counter.toString(),
                   style: TextStyle(fontSize: 34),
                 );
               },
@@ -135,13 +137,13 @@ class _MyHomePageState extends State<MyHomePage> {
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
           FloatingActionButton(
-            onPressed: _counterMobx.decrement,
+            onPressed: _counterMobxCodegen.decrement,
             tooltip: 'Decrement',
             child: Icon(Icons.remove),
           ),
           SizedBox(width: 10),
           FloatingActionButton(
-            onPressed: _counterMobx.increment,
+            onPressed: _counterMobxCodegen.increment,
             tooltip: 'Increment',
             child: Icon(Icons.add),
           ),
