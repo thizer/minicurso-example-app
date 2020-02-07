@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:minicurso/bloc/counter_bloc.dart';
+import 'package:minicurso/mobx/counter_mobx.dart';
+import 'package:minicurso/mobx_codegen/counter_mobx_codegen.dart';
 import 'package:minicurso/pages/todo_bloc_page.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 
 void main() => runApp(MyApp());
 
@@ -51,6 +54,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   CounterBloc _counterBloc = CounterBloc();
+  CounterMobx _counterMobx = CounterMobx();
 
   @override
   Widget build(BuildContext context) {
@@ -87,23 +91,35 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text('You have pushed the button this many times:'),
-            StreamBuilder(
-              stream: _counterBloc.output,
-              builder: (BuildContext context, AsyncSnapshot snapshot) {
-                if (snapshot.hasError) {
-                  return Text('Error: ${snapshot.error}');
-                }
 
-                switch (snapshot.connectionState) {
-                  case ConnectionState.waiting:
-                    return CircularProgressIndicator();
+            // Bloc
+            // StreamBuilder(
+            //   stream: _counterBloc.output,
+            //   builder: (BuildContext context, AsyncSnapshot snapshot) {
+            //     if (snapshot.hasError) {
+            //       return Text('Error: ${snapshot.error}');
+            //     }
 
-                  default:
-                    return Text(
-                      snapshot.data.toString(),
-                      style: TextStyle(fontSize: 34),
-                    );
-                }
+            //     switch (snapshot.connectionState) {
+            //       case ConnectionState.waiting:
+            //         return CircularProgressIndicator();
+
+            //       default:
+            //         return Text(
+            //           snapshot.data.toString(),
+            //           style: TextStyle(fontSize: 34),
+            //         );
+            //     }
+            //   },
+            // ),
+
+            // MobX
+            Observer(
+              builder: (BuildContext context) {
+                return Text(
+                  _counterMobx.value.toString(),
+                  style: TextStyle(fontSize: 34),
+                );
               },
             ),
             RaisedButton(
@@ -117,7 +133,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _counterBloc.increment,
+        onPressed: _counterMobx.increment,
         tooltip: 'Increment',
         child: Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
