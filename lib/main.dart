@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:minicurso/bloc/counter_bloc.dart';
 import 'package:minicurso/mobx/counter_mobx.dart';
 import 'package:minicurso/mobx_codegen/counter_mobx_codegen.dart';
-import 'package:minicurso/pages/todo_bloc_page.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+
+import 'package:minicurso/pages/todo_bloc_page.dart';
+import 'package:minicurso/pages/todo_mobx_page.dart';
 
 void main() => runApp(MyApp());
 
@@ -28,6 +30,7 @@ class MyApp extends StatelessWidget {
       home: MyHomePage(title: 'Flutter Demo Home Page'),
       routes: <String, WidgetBuilder>{
         '/todo-bloc-page': (context) => TodoBlocPage(),
+        '/todo-mobx-page': (context) => TodoMobxPage(),
       },
       debugShowCheckedModeBanner: false,
     );
@@ -129,6 +132,13 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: () {
                 Navigator.of(context).pushNamed('/todo-bloc-page');
               },
+            ),
+            RaisedButton(
+              child: Text('Todo Mobx Page'),
+              color: Colors.blue,
+              onPressed: () {
+                Navigator.of(context).pushNamed('/todo-mobx-page');
+              },
             )
           ],
         ),
@@ -137,6 +147,7 @@ class _MyHomePageState extends State<MyHomePage> {
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
           FloatingActionButton(
+            heroTag: null,
             onPressed: _counterMobxCodegen.decrement,
             tooltip: 'Decrement',
             child: Icon(Icons.remove),
