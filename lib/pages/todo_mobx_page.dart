@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:minicurso/mobx/todo_mobx.dart';
+import 'package:minicurso/mobx_codegen/todo_mobx_codegen.dart';
 
 class TodoMobxPage extends StatelessWidget {
   final _todoMobx = TodoMobx();
+  final _todoMobxCodegen = TodoMobxCodegen();
 
   @override
   Widget build(BuildContext context) {
@@ -15,14 +17,14 @@ class TodoMobxPage extends StatelessWidget {
         child: Observer(
           builder: (BuildContext context) {
             return ListView.builder(
-              itemCount: _todoMobx.content.length,
+              itemCount: _todoMobxCodegen.content.length,
               itemBuilder: (BuildContext context, int i) {
-                var item = _todoMobx.content[i];
+                var item = _todoMobxCodegen.content[i];
 
                 return ListTile(
                   leading: IconButton(
                     icon: Icon(item['status'] ? Icons.check_circle : Icons.check_circle_outline),
-                    onPressed: () => _todoMobx.toggleStatus.call([item['id']]),
+                    onPressed: () => _todoMobxCodegen.toggleStatus(item['id']),
                   ),
                   title: Text("#${item['id']} ${item['title']}"),
                   trailing: IconButton(
@@ -30,7 +32,7 @@ class TodoMobxPage extends StatelessWidget {
                       Icons.delete,
                       color: Colors.red,
                     ),
-                    onPressed: () => _todoMobx.remove.call([item['id']]),
+                    onPressed: () => _todoMobxCodegen.remove(item['id']),
                   ),
                 );
               },
@@ -39,7 +41,7 @@ class TodoMobxPage extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _todoMobx.addItem,
+        onPressed: _todoMobxCodegen.addItem,
         tooltip: 'Increment',
         child: Icon(Icons.add),
       ),

@@ -1,27 +1,21 @@
 import 'package:mobx/mobx.dart';
 
-class TodoMobx {
-  int _id = 0;
+part 'todo_mobx_codegen.g.dart';
 
-  TodoMobx() {
-    addItem = Action(_addItem);
+class TodoMobxCodegen = TodoMobxCodegenBase with _$TodoMobxCodegen;
 
-    toggleStatus = Action(_toggleStatus);
-
-    remove = Action(_remove);
-
-    _addItem();
+abstract class TodoMobxCodegenBase with Store {
+  TodoMobxCodegenBase() {
+    addItem();
   }
 
+  int _id = 0;
+
+  @observable
   ObservableList content = ObservableList();
 
-  Action addItem;
-
-  Action toggleStatus;
-
-  Action remove;
-
-  void _addItem() {
+  @action
+  addItem() {
     Map<String, dynamic> item = {
       "id": _id++,
       "title": "Beber Água",
@@ -31,7 +25,7 @@ class TodoMobx {
     content.add(item);
   }
 
-  void _toggleStatus(int id) {
+  toggleStatus(int id) {
     //
     // Recupera o item que procuramos
     Map<String, dynamic> item = content.firstWhere((i) => i['id'] == id);
@@ -48,7 +42,7 @@ class TodoMobx {
     });
   }
 
-  void _remove(int id) {
+  remove(int id) {
     content.removeWhere((item) => item['id'] == id);
   }
 }
